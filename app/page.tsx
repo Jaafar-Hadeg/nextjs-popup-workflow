@@ -9,33 +9,28 @@ type FormData = {
 };
 
 export default function Page() {
-  // 1) open = modal ouvert/fermé
   const [open, setOpen] = useState(false);
-
-  // 2) step = où on est dans le workflow (1..3)
   const [step, setStep] = useState<1 | 2 | 3>(1);
-
-  // 3) data = ce qu’on collecte dans les étapes
   const [data, setData] = useState<FormData>({
     name: "",
     plan: "basic",
   });
 
-  // ouvrir workflow = reset step + open
+
   const startWorkflow = () => {
     setData({ name: "", plan: "basic" });
     setStep(1);
     setOpen(true);
   };
 
-  // fermer = juste fermer
+
   const close = () => setOpen(false);
 
-  // next/back
+
   const next = () => setStep((s) => (s === 3 ? 3 : ((s + 1) as 1 | 2 | 3)));
   const back = () => setStep((s) => (s === 1 ? 1 : ((s - 1) as 1 | 2 | 3)));
 
-  // soumettre (final)
+
   const submit = () => {
     console.log("Données envoyées:", data);
     alert(`Terminé\nNom: ${data.name}\nPlan: ${data.plan}`);
@@ -64,7 +59,7 @@ export default function Page() {
       </div>
 
       <Modal open={open} onClose={close} title={title}>
-        {/* STEP 1 */}
+        {/* etape1 */}
         {step === 1 && (
           <div className="space-y-4">
             <p className="text-sm text-zinc-600 dark:text-zinc-300">
