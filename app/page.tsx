@@ -38,7 +38,7 @@ function SegmentedProgress({ step, total }: { step: number; total: number }) {
   );
 }
 
-// ─── Step bodies (external → stable identity, no focus loss) ─────────────────
+// ─── Step bodies 
 function Step1({ name, onChange }: { name: string; onChange: (v: string) => void }) {
   return (
     <div className="space-y-4">
@@ -126,11 +126,11 @@ function Step3({ data }: { data: FormData }) {
   );
 }
 
-// ─── Btn styles ───────────────────────────────────────────────────────────────
+// Btn styles
 const btnOutline = "rounded-xl border px-4 py-2 hover:bg-black/5 dark:border-zinc-700 dark:hover:bg-white/10";
 const btnPrimary = "rounded-xl bg-black px-4 py-2 text-white hover:opacity-90 disabled:opacity-40 dark:bg-white dark:text-black";
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
+// Page
 export default function Page() {
   const [open, setOpen]   = useState(false);
   const [step, setStep]   = useState<Step>(1);
@@ -173,7 +173,7 @@ export default function Page() {
       <Modal open={open} onClose={close} title={titles[step]}>
         <SegmentedProgress step={step} total={TOTAL_STEPS} />
 
-        {/* ✅ Rendu conditionnel direct — pas de sous-composant déclaré ici */}
+      
         {step === 1 && (
           <Step1 name={data.name} onChange={(v) => setData((d) => ({ ...d, name: v }))} />
         )}
