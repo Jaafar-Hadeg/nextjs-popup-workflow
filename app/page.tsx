@@ -163,8 +163,8 @@ export default function Page() {
   return (
     <main className="min-h-screen bg-zinc-50 p-8 dark:bg-black">
       <div className="mx-auto max-w-xl rounded-2xl bg-white p-6 shadow-sm dark:bg-zinc-900">
-        <h1 className="text-2xl font-bold text-black dark:text-zinc-50">Workflow Popup (3 étapes)</h1>
-        <p className="mt-2 text-zinc-600 dark:text-zinc-300">Clique pour lancer un workflow.</p>
+        <h1 className="text-2xl font-bold text-black dark:text-zinc-50">Workflow Popup </h1>
+     
         <button onClick={startWorkflow} className={`mt-5 ${btnPrimary} px-5 py-3`}>
           Lancer le workflow
         </button>
