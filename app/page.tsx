@@ -182,19 +182,19 @@ export default function Page() {
         )}
         {step === 3 && <Step3 data={data} />}
 
-        {/* Footer */}
+       
         {/* Footer */}
 <div className="mt-6 flex items-center justify-between gap-2">
-  {/* Gauche : Retour (uniquement si step > 1) */}
+ 
   {step > 1 ? (
     <button onClick={back} className={btnOutline}>
       Retour
     </button>
   ) : (
-    <div /> // garde l'espace à gauche quand on est à l'étape 1
+    <div /> /
   )}
 
-  {/* Droite : Annuler + Suivant/Confirmer */}
+
   <div className="flex gap-2">
     <button onClick={close} className={btnOutline}>
       Annuler
