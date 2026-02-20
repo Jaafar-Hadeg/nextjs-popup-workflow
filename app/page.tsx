@@ -38,7 +38,7 @@ function SegmentedProgress({ step, total }: { step: number; total: number }) {
   );
 }
 
-// ─── Step bodies 
+//  Step bodies 
 function Step1({ name, onChange }: { name: string; onChange: (v: string) => void }) {
   return (
     <div className="space-y-4">
