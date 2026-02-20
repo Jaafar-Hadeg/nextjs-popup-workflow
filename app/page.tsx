@@ -7,15 +7,51 @@ type FormData = {
   name: string;
   plan: "basic" | "pro" | "enterprise";
 };
+function SegmentedProgress({ step, total }: { step: number; total: number }) {
+ 
+  const percent = Math.round((step / total) * 100);
+
+  return (
+    <div className="mb-5">
+      {}
+      <div className="flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400">
+        <span>
+          Étape {step}/{total}
+        </span>
+        <span>{percent}%</span>
+      </div>
+
+      {}
+      <div className="mt-2 flex overflow-hidden rounded-full bg-zinc-200 dark:bg-white/10">
+        {Array.from({ length: total }).map((_, i) => {
+          const active = i < step;
+
+          return (
+            <div
+              key={i}
+              className={[
+               
+                "h-1.5 flex-1",
+                i !== 0 ? "border-l border-white/50 dark:border-black/30" : "",
+              
+                active ? "bg-emerald-500 transition-all duration-300" : "bg-transparent",
+              ].join(" ")}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 export default function Page() {
-  // open = modal ouvert/fermé
+
   const [open, setOpen] = useState(false);
 
-  // step = où on est dans le workflow (1..3)
+  
   const [step, setStep] = useState<1 | 2 | 3>(1);
 
-  //  data = ce qu’on collecte dans les étapes
+  //ce qu’on collecte dans les étapes
   const [data, setData] = useState<FormData>({
     name: "",
     plan: "basic",
@@ -41,6 +77,7 @@ export default function Page() {
     alert(`Terminé\nNom: ${data.name}\nPlan: ${data.plan}`);
     close();
   };
+  
 
   const title =
     step === 1 ? "Étape 1 : Ton nom" : step === 2 ? "Étape 2 : Plan" : "Étape 3 : Confirmation";
@@ -64,7 +101,11 @@ export default function Page() {
       </div>
 
       <Modal open={open} onClose={close} title={title}>
+        <SegmentedProgress step={step} total={3} />
+       
+
         {/* STEP 1 */}
+         
         {step === 1 && (
           <div className="space-y-4">
             <p className="text-sm text-zinc-600 dark:text-zinc-300">
@@ -103,47 +144,69 @@ export default function Page() {
 
         
         {step === 2 && (
-          <div className="space-y-4">
-            <p className="text-sm text-zinc-600 dark:text-zinc-300">
-              Choisis un plan, puis Suivant.
-            </p>
+        <div className="space-y-3">
+  {(["basic", "pro", "enterprise"] as const).map((p) => {
+    const selected = data.plan === p;
 
-            <div className="space-y-2">
-              {(["basic", "pro", "enterprise"] as const).map((p) => (
-                <label key={p} className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    checked={data.plan === p}
-                    onChange={() => setData((d) => ({ ...d, plan: p }))}
-                  />
-                  <span className="capitalize text-black dark:text-zinc-50">{p}</span>
-                </label>
-              ))}
-            </div>
+    return (
+      <label
+        key={p}
+        className={[
+         
+          "flex cursor-pointer items-center justify-between rounded-2xl border p-4 transition",
+          
+          "hover:bg-zinc-50 dark:hover:bg-white/5",
+         
+          selected
+            ? "border-emerald-500 ring-2 ring-emerald-500/20"
+            : "border-zinc-200 dark:border-white/10",
+        ].join(" ")}
+      >
+        {}
+        <input
+          type="radio"
+          name="plan"
+          value={p}
+          checked={selected}
+          onChange={() => setData((d) => ({ ...d, plan: p }))}
+          className="sr-only"
+        />
 
-            <div className="flex justify-between gap-2">
-              <button
-                onClick={back}
-                className="rounded-xl border px-4 py-2 hover:bg-black/5 dark:border-zinc-700 dark:hover:bg-white/10"
-              >
-                Retour
-              </button>
-              <div className="flex gap-2">
-                <button
-                  onClick={close}
-                  className="rounded-xl border px-4 py-2 hover:bg-black/5 dark:border-zinc-700 dark:hover:bg-white/10"
-                >
-                  Annuler
-                </button>
-                <button
-                  onClick={next}
-                  className="rounded-xl bg-black px-4 py-2 text-white hover:opacity-90 dark:bg-white dark:text-black"
-                >
-                  Suivant
-                </button>
-              </div>
-            </div>
-          </div>
+        {}
+        <div className="flex flex-col">
+          <span className="text-sm font-medium capitalize text-zinc-900 dark:text-zinc-50">
+            {p}
+          </span>
+          <span className="text-xs text-zinc-500 dark:text-zinc-400">
+            {p === "basic"
+              ? "Pour commencer"
+              : p === "pro"
+              ? "Pour avancer plus vite"
+              : "Pour équipes & entreprise"}
+          </span>
+        </div>
+
+        {}
+        <span
+          className={[
+            "grid h-5 w-5 place-items-center rounded-full border transition",
+            selected
+              ? "border-emerald-500 bg-emerald-500"
+              : "border-zinc-300 bg-transparent dark:border-white/20",
+          ].join(" ")}
+        >
+          {}
+          <span
+            className={[
+              "h-2 w-2 rounded-full bg-white transition",
+              selected ? "scale-100" : "scale-0",
+            ].join(" ")}
+          />
+        </span>
+      </label>
+    );
+  })}
+</div>
         )}
 
         {}
