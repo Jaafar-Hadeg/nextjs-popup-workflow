@@ -183,24 +183,34 @@ export default function Page() {
         {step === 3 && <Step3 data={data} />}
 
         {/* Footer */}
-        <div className="mt-6 flex items-center justify-between gap-2">
-          <button onClick={step === 1 ? close : back} className={btnOutline}>
-            {step === 1 ? "Annuler" : "Retour"}
-          </button>
+        {/* Footer */}
+<div className="mt-6 flex items-center justify-between gap-2">
+  {/* Gauche : Retour (uniquement si step > 1) */}
+  {step > 1 ? (
+    <button onClick={back} className={btnOutline}>
+      Retour
+    </button>
+  ) : (
+    <div /> // garde l'espace à gauche quand on est à l'étape 1
+  )}
 
-          <div className="flex gap-2">
-            <button onClick={close} className={btnOutline}>Annuler</button>
-            {step < TOTAL_STEPS ? (
-              <button onClick={next} disabled={!canGoNext} className={btnPrimary}>
-                Suivant
-              </button>
-            ) : (
-              <button onClick={submit} className={btnPrimary}>
-                Confirmer
-              </button>
-            )}
-          </div>
-        </div>
+  {/* Droite : Annuler + Suivant/Confirmer */}
+  <div className="flex gap-2">
+    <button onClick={close} className={btnOutline}>
+      Annuler
+    </button>
+
+    {step < TOTAL_STEPS ? (
+      <button onClick={next} disabled={!canGoNext} className={btnPrimary}>
+        Suivant
+      </button>
+    ) : (
+      <button onClick={submit} className={btnPrimary}>
+        Confirmer
+      </button>
+    )}
+  </div>
+</div>
       </Modal>
     </main>
   );
